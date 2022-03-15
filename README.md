@@ -1,6 +1,6 @@
 ## Cross-dataset Learning for Generalizable Land Use Classification (PyTorch)
 
-Training and testing utilities for fine-tuning remote sensing feature extractors on multiple datasets.
+Training and testing scripts for few-shot, cross-domain RSC with cross-dataset learning.
 
 ---
 
