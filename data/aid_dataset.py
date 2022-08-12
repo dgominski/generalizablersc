@@ -14,7 +14,7 @@ import glob
 
 class AIDDataset(BaseDataset):
     def __init__(self, opt=None):
-        self.dataroot = "/scratch/alegoria_backup/data/AID"
+        self.dataroot = "DATAROOT"
 
         super().__init__(opt)
 
@@ -56,7 +56,7 @@ class AIDDataset(BaseDataset):
 class AIDTestDataset(BaseTestDataset):
     def __init__(self, opt=None):
         self.opt = opt
-        self.dataroot = "/scratch/alegoria_backup/data/AID"
+        self.dataroot = "DATAROOT"
         super().__init__(opt)
         self.transform = transforms.Compose((
             #transforms.Resize((self.opt.imsize, self.opt.imsize)),
