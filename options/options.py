@@ -6,15 +6,10 @@ import models
 import data
 import datetime
 
-test_datasets_names = ['oxford5k', 'paris6k', 'roxford5k', 'rparis6k', 'skraa', 'holidays', 'google-landmarks']
-test_whiten_names = ['retrieval-SfM-30k', 'retrieval-SfM-120k']
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
     and callable(models.__dict__[name]))
-model_names.append('se_resnet50')
 pool_names = ['mac', 'spoc', 'gem', 'amapsd', 'amapssd', 'amappsd', 'netvlad', 'rmac']
-optimizer_names = ['sgd', 'adam']
-loss_names = ['contrastive']
 
 
 class Options():

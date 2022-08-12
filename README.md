@@ -18,7 +18,7 @@ conda activate rsfinetuning
  
 ### Setup :
 
-Our code is inspired from [[Cycle-GAN](https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix)].
+Our code structure is inspired from [[Cycle-GAN](https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix)].
 
 The following datasets can be used for training and testing:
 * AID
