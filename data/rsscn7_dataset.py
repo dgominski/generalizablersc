@@ -27,15 +27,16 @@ class RSSCN7Dataset(BaseDataset):
         """ Loads dataset from disk. This method will save a .pkl dataset file to the DATAROOT folder the first time
         the dataset is used and directly read it next time, to avoid systematic parsing.
         """
-        if not os.path.exists(os.path.join(self.dataroot, "data.pkl")):
+        if not os.path.exists(os.path.join(self.dataroot, "data.pkl")) or self.opt.no_cache:
             self.df = pd.DataFrame(data=None, columns=['path', 'classname', 'class'])
             classes = glob.glob(os.path.join(self.dataroot, "*"))
             classes = [c for c in classes if os.path.isdir(c)]
             for i, classname in enumerate(classes):
-                tempdf = pd.DataFrame({'classname': os.path.basename(classname), 'class': i, 'path': glob.glob(os.path.join(classname, "*"))})
-                self.df = self.df.append(tempdf)
+                tempdf = pd.DataFrame({'classname': os.path.basename(classname), 'class': i, 'path': glob.glob(os.path.join(classname, "*.jpg"))})
+                self.df = pd.concat((self.df, tempdf))
             self.df.reset_index(drop=True, inplace=True)
-            self.df.to_pickle(os.path.join(self.dataroot, "data.pkl"))
+            if not self.opt.no_cache:
+                self.df.to_pickle(os.path.join(self.dataroot, "data.pkl"))
         else:
             self.df = pd.read_pickle(os.path.join(self.dataroot, "data.pkl"))
         self.df['qclass'] = self.df['class']
@@ -65,15 +66,16 @@ class RSSCN7TestDataset(BaseTestDataset):
         """ Loads dataset from disk. This method will save a .pkl dataset file to the DATAROOT folder the first time
         the dataset is used and directly read it next time, to avoid systematic parsing.
         """
-        if not os.path.exists(os.path.join(self.dataroot, "data.pkl")):
+        if not os.path.exists(os.path.join(self.dataroot, "data.pkl")) or self.opt.no_cache:
             self.df = pd.DataFrame(data=None, columns=['path', 'classname', 'class'])
             classes = glob.glob(os.path.join(self.dataroot, "*"))
             classes = [c for c in classes if os.path.isdir(c)]
             for i, classname in enumerate(classes):
-                tempdf = pd.DataFrame({'classname': os.path.basename(classname), 'class': i, 'path': glob.glob(os.path.join(classname, "*"))})
-                self.df = self.df.append(tempdf)
+                tempdf = pd.DataFrame({'classname': os.path.basename(classname), 'class': i, 'path': glob.glob(os.path.join(classname, "*.jpg"))})
+                self.df = pd.concat((self.df, tempdf))
             self.df.reset_index(drop=True, inplace=True)
-            self.df.to_pickle(os.path.join(self.dataroot, "data.pkl"))
+            if not self.opt.no_cache:
+                self.df.to_pickle(os.path.join(self.dataroot, "data.pkl"))
         else:
             self.df = pd.read_pickle(os.path.join(self.dataroot, "data.pkl"))
         return

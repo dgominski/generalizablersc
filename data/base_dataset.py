@@ -276,17 +276,17 @@ class BaseTestDataset(BaseDataset):
         :param n_queries:
         """
 
-        if os.path.exists(os.path.join(self.dataroot, "queries.pkl")):
+        if os.path.exists(os.path.join(self.dataroot, "queries.pkl")) and not self.opt.no_cache:
             self.queries = pd.read_pickle(os.path.join(self.dataroot, "queries.pkl"))
             print("-- loading ground truth with {} queries from disk".format(len(self.queries.index)))
             return
 
-        print("Ground truth not found on disk at {}, generating with {}".format(os.path.join(self.dataroot, "queries.pkl"),
-                                                                                "n_queries="+str(n_queries) if n_queries else "all images as queries"))
+        print("{} -- Generating ground truth with {}".format(self.name, "n_queries="+str(n_queries) if n_queries else "all images as queries"))
         self.queries = self.generate_ground_truth(self.df, n_queries=n_queries)
 
-        print("Saving generated queries.pkl to {}".format(self.dataroot))
-        self.queries.to_pickle(os.path.join(self.dataroot, "queries.pkl"))
+        if not self.opt.no_cache:
+            print("Saving generated queries.pkl to {}".format(self.dataroot))
+            self.queries.to_pickle(os.path.join(self.dataroot, "queries.pkl"))
 
     @staticmethod
     def generate_ground_truth(df, n_queries=None):

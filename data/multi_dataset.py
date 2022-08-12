@@ -155,23 +155,23 @@ class MultiDataset(torch.utils.data.Dataset):
             for i,cd in enumerate(classes_to_delete):
                 to_delete.extend(np.argwhere(np.logical_and(self.dataset_idxs==d, self.classes==cd)).squeeze().tolist())
         
-        np.save("to_delete_idxs.npy", np.array(to_delete))
+        # np.save("to_delete_idxs.npy", np.array(to_delete))
         self.dataset_idxs = np.delete(self.dataset_idxs, to_delete)
         _, self.dataset_sizes = np.unique(self.dataset_idxs, return_counts=True)
         self.paths = np.delete(self.paths, to_delete)
         self.classes = np.delete(self.classes, to_delete)
-        np.save("dataset_idxs.npy", self.dataset_idxs)
-        np.save("dataset_names.npy", self.dataset_names)
-        np.save("paths.npy", self.paths)
-        np.save("classes.npy", self.classes)
-
-    def load_from_disk(self, path):
-        self.dataset_idxs = np.load(os.path.join(path, "dataset_idxs.npy"))
-        self.paths = np.load(os.path.join(path, "paths.npy"), allow_pickle=True)
-        self.classes = np.load(os.path.join(path, "classes.npy"), allow_pickle=True)
-        _, self.dataset_sizes = np.unique(self.dataset_idxs, return_counts=True)
-        self.dataset_names = np.load("dataset_names.npy")
-        return
+    #     np.save("dataset_idxs.npy", self.dataset_idxs)
+    #     np.save("dataset_names.npy", self.dataset_names)
+    #     np.save("paths.npy", self.paths)
+    #     np.save("classes.npy", self.classes)
+    #
+    # def load_from_disk(self, path):
+    #     self.dataset_idxs = np.load(os.path.join(path, "dataset_idxs.npy"))
+    #     self.paths = np.load(os.path.join(path, "paths.npy"), allow_pickle=True)
+    #     self.classes = np.load(os.path.join(path, "classes.npy"), allow_pickle=True)
+    #     _, self.dataset_sizes = np.unique(self.dataset_idxs, return_counts=True)
+    #     self.dataset_names = np.load("dataset_names.npy")
+    #     return
     
     def __getitem__(self, index):
         path = self.paths[index]
@@ -194,3 +194,10 @@ class MultiDataset(torch.utils.data.Dataset):
         batch_sampler = CustomBatchSampler(self.dataset_names, self.dataset_sizes, self.classes, self.opt.batch_size, n_samples=int(self.k), epoch_size=int(50000/self.opt.batch_size))
         loader = DataLoader(self, batch_sampler=batch_sampler, num_workers=self.opt.num_threads)
         return loader
+
+
+if __name__ == '__main__':
+    from options.options import Options
+
+    opt = Options().parse()
+    refdataset = MultiDataset(opt, trainingdatasets=["ucm"])

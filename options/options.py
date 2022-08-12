@@ -41,6 +41,7 @@ class Options():
         parser.add_argument('--net', type=str, default='resnet34', help='name of the backbone feature extractor to be used')
 
         # dataset parameters
+        parser.add_argument('--no-cache', action='store_true')
         parser.add_argument('--dataset-size', type=int, default=None, help='number of samples to take to build a subset')
         parser.add_argument('--mean', default=[0.485, 0.456, 0.406], help='dataset image mean')
         parser.add_argument('--std', default=[0.229, 0.224, 0.225], help='dataset image std')
