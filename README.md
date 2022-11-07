@@ -68,7 +68,10 @@ python3 test.py --model deepdesc --load-from $RUN --net resnet50 --dim 512 --whi
 ### Publication :
 
 Have a look at the detailed method and results in our [Earthvision 2022 paper](https://openaccess.thecvf.com/content/CVPR2022W/EarthVision/papers/Gominski_Cross-Dataset_Learning_for_Generalizable_Land_Use_Scene_Classification_CVPRW_2022_paper.pdf) (CVPR workshop) that received the Best Paper Award.
-
+If you reuse our code or results, please consider citing:
+```
+D. Gominski, V. Gouet-Brunet, and L. Chen, “Cross-dataset Learning for Generalizable Land Use Scene Classification,” in 2022 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW), Jun. 2022, pp. 1381–1390. doi: 10.1109/CVPRW56347.2022.00144.
+```
 
 ---
 
